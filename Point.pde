@@ -16,16 +16,17 @@ public class Point
     coneSegmentRotation = cSR;
   }
   
-  public void stepConeRotation()
+  public void stepConeRotation(boolean reverse)
   {
-    coneRotation+=.0025;
+    coneRotation += .0025 * (reverse ? -1 : 1);
   }
   
   /*
    Important note: centerZ doesn't represent the actual center of the cone (that is always (0, 0, 0)).
    It actually represents the distance under the origin that the x and y are being evaluated at
-   This is important because the center of the cone needs to not move during the rotation which means it is simply easier 
-   to move the plane down than it is to move the cone up
+   This is important because the center of the cone needs to not move during the rotation which means it must be 
+   on the axis of rotation so the matrix multiplacation returns all zeros. Because of this, it is easier
+   to just move the plane down than it is to move the cone up
   */
   //Important note 2: centerX and centerY refer to the conics position on the screen and have no relation to the graph
   public void solve()
@@ -39,6 +40,7 @@ public class Point
     /*size*/2);
   }
   
+  //solves for the parameter so that each point is at (x, y, -centerZ).
   public float getParameter() { return (-1*centerZ) / (((-1 * sin(coneRotation)) * cos(coneSegmentRotation)) + (cos(coneRotation) * tan(PI/coneAngle))); }
   
   public float getX() { return centerX + ((cos(coneRotation) * getParameter() * cos(coneSegmentRotation)) + (sin(coneRotation) * tan(PI/coneAngle) * getParameter())); }

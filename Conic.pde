@@ -16,11 +16,11 @@ public class Conic
     generatePoints();
   }
   
-  public void step()
+  public void step(boolean reverse)
   {
     float counter = 0;
     for (int i = 0; i < points.length; i++)
-      points[i].stepConeRotation();
+      points[i].stepConeRotation(reverse);
     for(int i = 0; i < points.length; i++)
     {
       counter-=.25;
