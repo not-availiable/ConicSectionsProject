@@ -1,10 +1,11 @@
 public class Point
 {
-  //coneAngle is the 'spread of the cone
+  //coneAngle is the 'spread' of the cone
   //coneSegment rotation is the rotation of a line about the cone
   //coneRotation is the rotation of the collection of lines that make up the cone
   private float centerX, centerY, centerZ, coneAngle, coneSegmentRotation;
   private float coneRotation = 0;
+  
   
   public Point(float cX, float cY, float cZ, float cA, float cSR)
   {
@@ -17,7 +18,7 @@ public class Point
   
   public void stepConeRotation()
   {
-    coneRotation+=.002;
+    coneRotation+=.0025;
   }
   
   /*
@@ -29,12 +30,17 @@ public class Point
   //Important note 2: centerX and centerY refer to the conics position on the screen and have no relation to the graph
   public void solve()
   {
-    // Important note: Parenthesis are annoying (took many tries for the correct math to be communicated correctly)
-    float t = (-1*centerZ) / (((-1 * sin(coneRotation)) * cos(coneSegmentRotation)) + (cos(coneRotation) * tan(PI/coneAngle)));
+    float t = getParameter();
+
     ellipse(
     /*x*/centerX + ((cos(coneRotation) * t * cos(coneSegmentRotation)) + (sin(coneRotation) * tan(PI/coneAngle) * t)), 
     /*y*/centerY + (t * sin(coneSegmentRotation)), 
-    /*size*/1, 
-    /*size*/1);
+    /*size*/2, 
+    /*size*/2);
   }
+  
+  public float getParameter() { return (-1*centerZ) / (((-1 * sin(coneRotation)) * cos(coneSegmentRotation)) + (cos(coneRotation) * tan(PI/coneAngle))); }
+  
+  public float getX() { return centerX + ((cos(coneRotation) * getParameter() * cos(coneSegmentRotation)) + (sin(coneRotation) * tan(PI/coneAngle) * getParameter())); }
+  public float getY() { return centerY + (getParameter() * sin(coneSegmentRotation)); } 
 }
