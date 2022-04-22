@@ -16,9 +16,9 @@ public class Point
     coneSegmentRotation = cSR;
   }
   
-  public void stepConeRotation(boolean reverse)
+  public void stepConeRotation(boolean reverse, boolean goesLeft, float speed)
   {
-    coneRotation += .0025 * (reverse ? -1 : 1);
+    coneRotation += speed * (reverse ? -1 : 1) * (goesLeft ? 1 : -1);
   }
   
   /*
@@ -29,16 +29,7 @@ public class Point
    to just move the plane down than it is to move the cone up
   */
   //Important note 2: centerX and centerY refer to the conics position on the screen and have no relation to the graph
-  public void solve()
-  {
-    float t = getParameter();
 
-    ellipse(
-    /*x*/centerX + ((cos(coneRotation) * t * cos(coneSegmentRotation)) + (sin(coneRotation) * tan(PI/coneAngle) * t)), 
-    /*y*/centerY + (t * sin(coneSegmentRotation)), 
-    /*size*/2, 
-    /*size*/2);
-  }
   
   //solves for the parameter so that each point is at (x, y, -centerZ).
   public float getParameter() { return (-1*centerZ) / (((-1 * sin(coneRotation)) * cos(coneSegmentRotation)) + (cos(coneRotation) * tan(PI/coneAngle))); }

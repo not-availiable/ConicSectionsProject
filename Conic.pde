@@ -1,13 +1,18 @@
 public class Conic
 {
-  private float centerX, centerY;
+  private float centerX, centerY, centerZ, red, green, blue;
   private int detail;
   private Point[] points;
   
-  public Conic(float cX, float cY, int d)
+  public Conic(float cX, float cY, float cZ, int r, int g, int b, int d)
   {
     centerX = cX;
     centerY = cY;
+    centerZ = cZ;
+    
+    red = r;
+    green = g;
+    blue = b;
     
     detail = d;
     
@@ -16,19 +21,11 @@ public class Conic
     generatePoints();
   }
   
-  public void step(boolean reverse)
+  public void step(boolean reverse, boolean goesLeft, float speed)
   {
-    float counter = 0;
     for (int i = 0; i < points.length; i++)
-      points[i].stepConeRotation(reverse);
-    for(int i = 0; i < points.length; i++)
-    {
-      counter-=.25;
-      
-      stroke(255+counter, 0, 0-counter);
-      fill(255+counter, 0, 0-counter);
-      points[i].solve(); 
-    }
+      points[i].stepConeRotation(reverse, goesLeft, speed);
+    
       
     generateShape();
   }
@@ -37,13 +34,14 @@ public class Conic
   {
     for (int i = 0; i < points.length; i++)
     {
-      points[i] = new Point(centerX, centerY, 50, 3.4, ((2*PI/detail)*i));
+      points[i] = new Point(centerX, centerY, centerZ, 3.4, ((2*PI/detail)*i));
     }
   }
   
   private void generateShape()
   {
-    fill(0, 100, 0);
+    fill(red, green, blue);
+    stroke(red, green, blue);
     beginShape();
     for (int i = 0; i < points.length; i++)
     {
