@@ -19,6 +19,11 @@ public class Point
   public void stepConeRotation(boolean reverse, boolean goesLeft, float speed)
   {
     coneRotation += speed * (reverse ? -1 : 1) * (goesLeft ? 1 : -1);
+    
+    //first timestamp
+    //coneRotation = speed * 82.4615;
+    //second timestamp
+    //coneRotation = 0;
   }
   
   /*
